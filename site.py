@@ -6,12 +6,16 @@ sklearn.set_config(transform_output="pandas")
 
 
 # Загрузка модели и предобработчика
-with open('model.pkl', 'rb') as f:
-    model = pickle.load(f)
+@st.cache_data
+def load_model():
+    with open('model.pkl', 'rb') as f:
+        model = pickle.load(f)
 
-with open('pipeline.pkl', 'rb') as f:
-    prepocessor = pickle.load(f)
+    with open('pipeline.pkl', 'rb') as f:
+        prepocessor = pickle.load(f)
+    return model, prepocessor
 
+model, prepocessor = load_model()
 def preprocess_input(data):
     # Применяем предобработку к входным данным
     preprocessed_data = prepocessor.transform(data)
