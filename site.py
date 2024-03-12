@@ -5,6 +5,7 @@ import pandas as pd
 sklearn.set_config(transform_output="pandas")
 import catboost
 
+import category_encoders as ce
 
 import numpy as np
 
