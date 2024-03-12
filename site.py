@@ -4,6 +4,19 @@ import sklearn
 import pandas as pd
 sklearn.set_config(transform_output="pandas")
 
+import numpy as np
+
+class Ensemble:
+    def __init__(self,model1,model2,weights):
+        self.model1=model1
+        self.model2=model2
+        self.weights=weights
+
+    def predict_proba(self,X):
+        return (self.weights[0] * self.model2.predict_proba (X) + self.weights[1] * self.model1.predict_proba (X)) / np.sum(self.weights)
+    def predict(self,X):
+        return np.argmax(self.predict_proba(X),axis=1)
+
 
 # Загрузка модели и предобработчика
 @st.cache_data
@@ -16,6 +29,7 @@ def load_model():
     return model, prepocessor
 
 model, prepocessor = load_model()
+
 def preprocess_input(data):
     # Применяем предобработку к входным данным
     preprocessed_data = prepocessor.transform(data)
