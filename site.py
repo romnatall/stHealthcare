@@ -3,6 +3,8 @@ import pickle
 import sklearn
 import pandas as pd
 sklearn.set_config(transform_output="pandas")
+import catboost
+
 
 import numpy as np
 
