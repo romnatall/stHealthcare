@@ -25,7 +25,7 @@ def predict_heart_disease(data):
     # Предобработка входных данных
     preprocessed_data = preprocess_input(data)
     # Предсказание с использованием модели
-    prediction = model.predict(preprocessed_data)
+    prediction = model.predict(preprocessed_data) , model.predict_proba(preprocessed_data)
     return prediction
 
 # Создаем интерфейс Streamlit
@@ -124,9 +124,18 @@ st.write(input_data)
 # Предсказываем наличие сердечного заболевания
 
 prediction = predict_heart_disease(input_data)
+
+result_df = pd.DataFrame({
+    'Предсказанный класс': prediction[0],
+    'Вероятность отсутствия заболевания': prediction[1][:, 0],  # Для бинарной классификации
+    'Вероятность наличия заболевания': prediction[1][:, 1]   # Для бинарной классификации
+})
+
 if prediction[0] == 1:
-    st.error('Возможно, у него есть сердечное заболевание.')
+    st.error('Возможно, у него есть сердечное заболевание.', icon="⚠️")
+
 else:
-    st.success('Пациент скорее всего в порядке. ')
+    st.success('Пациент скорее всего в порядке. ', icon="✅")
+st.write(result_df)
 
 
