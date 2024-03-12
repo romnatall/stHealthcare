@@ -30,6 +30,7 @@ def load_model():
 
 model, prepocessor = load_model()
 
+@st.cache_data
 def preprocess_input(data):
     # Применяем предобработку к входным данным
     preprocessed_data = prepocessor.transform(data)
